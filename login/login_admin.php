@@ -21,7 +21,7 @@
           <h3>Login Admin</h3>
         </div>
         <div class="form-input">
-          <input name="email" type="text" class="form-control item" id="email" placeholder="Email" />
+          <input name="email" type="text" class="form-control item" id="email" placeholder="Username" />
         </div>
         <div class="form-input">
           <input name="password" type="password" class="form-control item" id="password" placeholder="Password" />
@@ -42,7 +42,7 @@
         <div class="form-group">
           <button type="submit" class="btn btn-block login">Login</button>
         </div>
-        <a href="index2.php" style="color: white", >Home</a>
+        <a href="index.php" style="color: white", >Home</a>
         <a href="login.php"  style="color: white">Back</a>
       </form>
     </div>

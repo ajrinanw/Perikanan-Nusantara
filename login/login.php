@@ -4,7 +4,7 @@
 
     session_start();
     if(isset($_SESSION["user"])) {
-        header("Location: ../index2.php");
+        header("Location: ../index.php");
     } else {
         if(isset($_POST['login'])) {
             $username = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
@@ -25,10 +25,10 @@
 
                     session_start();
                     $_SESSION["user"] = $user;
-                    header("Location: ../index2.php");
+                    header("Location: ../karyawan/dashboard.php");
 
                     if($user['role'] == "karyawan") {
-                      header("Location: ../");
+                      header("Location: ../karyawan/dashboard.php");
 
                     } else {
                       header("Location: login_admin.php");
@@ -91,7 +91,7 @@
         <div class="form-group">
           <button type="submit" class="btn btn-block login" name="login" id="login"> Login </button>>
         </div>
-        <a href="../index2.php" style="color: white", >Home</a>
+        <a href="../index.php" style="color: white", >Home</a>
         <a href="login_admin.php"  style="color: white">Login As Admin</a>
       </form>
     </div>

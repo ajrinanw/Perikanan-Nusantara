@@ -17,9 +17,9 @@
         <div class="gb-brand">Perikanan Indonesia</div>
         <ul class="nav-link">
             <li><a href="index2.php" class="gb-link">Home</a></li>
-            <li><a href="#" class="gb-link">Profile</a></li>
-            <li><a href="#" class="gb-link">Article</a></li>
-            <li><a href="#" class="gb-link">Contact</a></li>
+            <li><a href="profile.php" class="gb-link">Profile</a></li>
+            <li><a href="galery.php" class="gb-link">Galery</a></li>
+            <li><a href="contact.php" class="gb-link">Contact</a></li>
             <li><a href="login/login.php" class="gb-link">Login</a></li>
         </ul>
     </div>
@@ -43,18 +43,17 @@
                         </div>
                     </h1>
                     <div class="btn-get-started">
-                        <a href="#" class="btn">Get Started</a>
+                        <a href="profile.php" class="btn">Profile</a>
                     </div>
                 </div>
             </div>
             <div class="banner">
-                <img src="assets/img/bunaken-bentuk.png" height="400px" >
+                <img src="assets/img/bunaken-bentuk.png" height="300px" >
             </div>
         </div>
     </section>
     <!--Footer-->
-    <section class="h-100 w-100 bg-white" style="box-sizing: border-box ,background-color: #2CABDD">
-    <div class="footer-2-2 container-xxl mx-auto position-relative p-0" style="font-family: 'Poppins', sans-serif">
+    <div class="footer-2-2 mx-auto position-relative p-0" style="font-family: 'Poppins', sans-serif">
         <div class="list-footer">
             <div class="row gap-md-0 gap-3">
                 <div class="col-lg-3 col-md-6">
@@ -168,6 +167,5 @@
             </div>
         </div>
     </div>
-</section>
 </body>
 </html>

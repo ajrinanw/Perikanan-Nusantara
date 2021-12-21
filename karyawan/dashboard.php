@@ -1,27 +1,31 @@
-<?php session_start(); ?>
+<?php 
+    session_start(); 
+    include_once("koneksi.php");
+    $result = mysqli_query($koneksi, "SELECT * FROM karyawan ORDER BY id_karyawan DESC");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perinus Indonesia</title>
+    <title>Perikanan Nusantara</title>
     <!-- plugins:css -->
-    <link rel="stylesheet" href="vendors/feather/feather.css">
-    <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" href="vendors/typicons/typicons.css">
-    <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../assets/vendors/feather/feather.css">
+    <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../assets/vendors/typicons/typicons.css">
+    <link rel="stylesheet" href="../assets/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="js/select.dataTables.min.css">
+    <link rel="stylesheet" href="../assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="../assets/js/select.dataTables.min.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
-    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="../assets/css/vertical-layout-light/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="images/favicon1.png" />
+    <link rel="shortcut icon" href="../assets/img/logo_bulat.png" />
 </head>
 <body>
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
@@ -33,18 +37,17 @@
             </div>
             <div>
                 <a class="navbar-brand brand-logo" href="dashboard.php">
-                    <img src="images/logo1.svg" alt="logo" />
+                    <img src="../assets/img/logo1.svg" alt="logo" />
                 </a>
                 <a class="navbar-brand brand-logo-mini" href="dashboard.php">
-                    <img src="images/logo-mini1.svg" alt="logo" />
+                    <img src="../assets/img/logo-mini1.svg" alt="logo" />
                 </a>
             </div>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-top"> 
             <ul class="navbar-nav">
                 <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-                    <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold"><?= $_SESSION['user']['username'] ?></span></h1>
-                    <h3 class="welcome-sub-text">Your performance summary this week </h3>
+                    <h1 class="welcome-text">Welcome, <span class="text-black fw-bold"><?= $_SESSION['user']['username'] ?></span></h1>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
@@ -64,16 +67,22 @@
                 </li>
                 <li class="nav-item dropdown d-none d-lg-block user-dropdown">
                     <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="img-xs rounded-circle" src="images/faces/face8.jpg" alt="Profile image">
+                        <img class="img-xs rounded-circle" src="../assets/img/faces/face8.jpg" alt="Profile image">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                         <div class="dropdown-header text-center">
-                            <img class="img-md rounded-circle" src="images/faces/face8.jpg" alt="Profile image">
-                            <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
-                            <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
+                        <?php
+                            include_once("koneksi.php");
+                            $result = mysqli_query($koneksi, "SELECT karyawan.*, divisi.nama_divisi, jabatan.nama_jabatan FROM karyawan, divisi, jabatan WHERE karyawan.id_divisi = divisi.id_divisi AND karyawan.id_jabatan = jabatan.id_jabatan ORDER BY id_karyawan DESC");	
+                                while($user_data = mysqli_fetch_array($result)) {
+                        ?>
+                            <img class="img-md rounded-circle" src="../assets/img/faces/face8.jpg" alt="Profile image">
+                            <p class="mb-1 mt-3 font-weight-semibold"><?= $user_data['nama_karyawan'] ?></p>
+                            <p class="fw-light text-muted mb-0"><?= $user_data['email'] ?></p>
                         </div>
+                        <?php } ?>
                         <a class="dropdown-item" href="profil.php"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
-                        <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+                        <a class="dropdown-item" href="../login/logout.php"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
                     </div>
                 </li>
             </ul>
@@ -84,7 +93,7 @@
     </nav>
 
     <div class="container-fluid page-body-wrapper">
-      <!-- partial:partials/_settings-panel.html -->
+        <!-- partial:partials/_settings-panel.html -->
         <div class="theme-setting-wrapper">
             <div id="settings-trigger"><i class="ti-settings"></i></div>
             <div id="theme-settings" class="settings-panel">
@@ -113,7 +122,7 @@
                 </li>
                 <li class="nav-item nav-category">Event</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Jurnal.php">
+                    <a class="nav-link" href="jurnal.php">
                         <i class="menu-icon mdi mdi-floor-plan"></i>
                         <span class="menu-title">Jurnal Harian</span>
                     </a>
@@ -127,10 +136,7 @@
                     </a>
                     <div class="collapse" id="form-elements">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link" href="#">Absensi</a></li>
-                        </ul>
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link" href="#">Pengambilan Cuti</a></li>
+                            <li class="nav-item"><a class="nav-link" href="absensi.php">Absensi</a></li>
                         </ul>
                     </div>
                 </li>
@@ -142,10 +148,7 @@
                     </a>
                     <div class="collapse" id="charts">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="#">Gaji</a></li>
-                        </ul>
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="#">Pinjaman</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="gaji.php">Gaji</a></li>
                         </ul>
                     </div>
                 </li>
@@ -166,79 +169,9 @@
                                                         <div class="card-body">
                                                             <div class="col-sm-8">
                                                                 <h3 class="text-white upgrade-info mb-0">
-                                                                    Enhance your <span class="fw-bold">Campaign</span> for better outreach
+                                                                    Yuk Isi <span class="fw-bold">Presensi</span> Harianmu!
                                                                 </h3>
-                                                                <a href="#" class="btn btn-info upgrade-btn">Upgrade Account!</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 d-flex flex-column">
-                                            <div class="row flex-grow">
-                                                <div class="col-12 grid-margin stretch-card">
-                                                    <div class="card card-rounded">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col-lg-12">
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <h4 class="card-title card-title-dash">Todo list</h4>
-                                                                        <div class="add-items d-flex mb-0">
-                                                                            <!-- <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> -->
-                                                                            <button class="add btn btn-icons btn-rounded btn-primary todo-list-add-btn text-white me-0 pl-12p"><i class="mdi mdi-plus"></i></button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="list-wrapper">
-                                                                        <ul class="todo-list todo-list-rounded">
-                                                                            <li class="d-block">
-                                                                                <div class="form-check w-100">
-                                                                                    <label class="form-check-label">
-                                                                                        <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text of the printing <i class="input-helper rounded"></i>
-                                                                                    </label>
-                                                                                    <div class="d-flex mt-2">
-                                                                                        <div class="ps-4 text-small me-3">24 June 2020</div>
-                                                                                        <div class="badge badge-opacity-warning me-3">Due tomorrow</div>
-                                                                                        <i class="mdi mdi-flag ms-2 flag-color"></i>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                            <li class="d-block">
-                                                                                <div class="form-check w-100">
-                                                                                    <label class="form-check-label">
-                                                                                        <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text of the printing <i class="input-helper rounded"></i>
-                                                                                    </label>
-                                                                                    <div class="d-flex mt-2">
-                                                                                        <div class="ps-4 text-small me-3">23 June 2020</div>
-                                                                                        <div class="badge badge-opacity-success me-3">Done</div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                            <li>
-                                                                                <div class="form-check w-100">
-                                                                                    <label class="form-check-label">
-                                                                                        <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text of the printing <i class="input-helper rounded"></i>
-                                                                                    </label>
-                                                                                    <div class="d-flex mt-2">
-                                                                                        <div class="ps-4 text-small me-3">24 June 2020</div>
-                                                                                        <div class="badge badge-opacity-success me-3">Done</div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                            <li class="border-bottom-0">
-                                                                                <div class="form-check w-100">
-                                                                                    <label class="form-check-label">
-                                                                                        <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text of the printing <i class="input-helper rounded"></i>
-                                                                                    </label>
-                                                                                    <div class="d-flex mt-2">
-                                                                                        <div class="ps-4 text-small me-3">24 June 2020</div>
-                                                                                        <div class="badge badge-opacity-danger me-3">Expired</div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
+                                                                <a href="absensi.php" class="btn btn-info upgrade-btn">Presensi Disini</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -257,25 +190,25 @@
     <!-- container-scroller -->
 
     <!-- plugins:js -->
-    <script src="vendors/js/vendor.bundle.base.js"></script>
+    <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
-    <script src="vendors/chart.js/Chart.min.js"></script>
-    <script src="vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    <script src="vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="../assets/vendors/chart.js/Chart.min.js"></script>
+    <script src="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="../assets/vendors/progressbar.js/progressbar.min.js"></script>
 
     <!-- End plugin js for this page -->
     <!-- inject:js -->
-    <script src="js/off-canvas.js"></script>
-    <script src="js/hoverable-collapse.js"></script>
-    <script src="js/template.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/todolist.js"></script>
+    <script src="../assets/js/off-canvas.js"></script>
+    <script src="../assets/js/hoverable-collapse.js"></script>
+    <script src="../assets/js/template.js"></script>
+    <script src="../assets/js/settings.js"></script>
+    <script src="../assets/js/todolist.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
-    <script src="js/jquery.cookie.js" type="text/javascript"></script>
-    <script src="js/dashboard.js"></script>
-    <script src="js/Chart.roundedBarCharts.js"></script>
+    <script src="../assets/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script src="../assets/js/Chart.roundedBarCharts.js"></script>
     <!-- End custom js for this page-->
 </body>
 </html>
